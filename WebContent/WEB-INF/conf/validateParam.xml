@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validators>
+<servletValidator servletUrl="sendToAll">
+
+<validator validatorClass="org.lulonglong.validator.NullValidator" >
+<validateParam name="content" errorCode="010101"/>
+</validator>
+
+<validator validatorClass="org.lulonglong.validator.MaxLengthValidator" maxLength="100" charsetName="utf-8">
+<validateParam name="content" errorCode="020101"/>
+<validateParam name="userlist" errorCode="020102"/>
+</validator>
+
+</servletValidator>
+
+<servletValidator servletUrl="sendToGroup">
+
+<validator validatorClass="org.lulonglong.validator.NullValidator" >
+<validateParam name="content" errorCode="010101"/>
+</validator>
+
+<validator validatorClass="org.lulonglong.validator.MaxLengthValidator" maxLength="100" charsetName="utf-8">
+<validateParam name="content" errorCode="020101"/>
+<validateParam name="userlist" errorCode="020102"/>
+</validator>
+
+</servletValidator>
+</validators>

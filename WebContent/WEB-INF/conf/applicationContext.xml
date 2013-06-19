@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context-3.0.xsd
+             http://www.springframework.org/schema/tx
+             http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+             http://www.springframework.org/schema/aop
+             http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- "NotificationAPI" -->
+	<bean id="notificationService"
+		class="locationshare.service.impl.NotificationService"
+		scope="singleton">
+	</bean>
+
+	<bean id="notificationAction"
+		class="locationshare.action.NotificationAction"
+		scope="singleton">
+		<property name="notificationService" ref="notificationService" />
+	</bean>
+
+	<bean id="sendAllValidator"
+		class="locationshare.validator.SendAllParamsValidator"
+		scope="singleton">
+	</bean>
+	
+	<bean id="sendUserValidator"
+		class="locationshare.validator.SendUserParamsValidator"
+		scope="singleton">
+	</bean>
+	
+	<bean id="sendGroupValidator"
+		class="locationshare.validator.SendGroupParamsValidator"
+		scope="singleton">
+	</bean>
+
+	<bean id="sendToAllServlet"
+		class="locationshare.servlet.SendToAllServlet"
+		scope="singleton">
+		<property name="notificationAction" ref="notificationAction" />
+		<property name="validator" ref="sendAllValidator" />
+	</bean>
+
+	<bean id="sendToUsersServlet"
+		class="locationshare.servlet.SendToUsersServlet"
+		scope="singleton">
+		<property name="notificationAction" ref="notificationAction" />
+		<property name="validator" ref="sendUserValidator" />
+	</bean>
+
+	<bean id="sendToGroupsServlet"
+		class="locationshare.servlet.SendToGroupsServlet"
+		scope="singleton">
+		<property name="notificationAction" ref="notificationAction" />
+		<property name="validator" ref="sendGroupValidator" />
+	</bean>
+
+</beans> 
