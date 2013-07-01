@@ -58,8 +58,8 @@ public class ValidateListener implements ServletContextListener {
 				.getRealPath(configLocation);
 
 		SAXReader reader = new SAXReader();
-		Map<String,String> map = new HashMap<String,String>(); 
-        map.put("xmlns","http://www.example.net/test");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("xmlns", "http://www.example.net/test");
 		reader.getDocumentFactory().setXPathNamespaceURIs(map);
 		try {
 			Document document = reader.read(new File(configPath));
@@ -123,11 +123,11 @@ public class ValidateListener implements ServletContextListener {
 				ValidateUtil.servletValidators.put(servletUrl, paramValidators);
 
 			}
-
-			FilterRegistration filterRegistration = servletContextEvent
-					.getServletContext().addFilter("ValidateFilter",
-							"org.lulonglong.filter.ValidateFilter");
-			filterRegistration.addMappingForUrlPatterns(null, true, "/*");
+			// 在jetty里报错
+			// FilterRegistration filterRegistration = servletContextEvent
+			// .getServletContext().addFilter("ValidateFilter",
+			// "org.lulonglong.filter.ValidateFilter");
+			// filterRegistration.addMappingForUrlPatterns(null, true, "/*");
 
 		} catch (DocumentException e) {
 			e.printStackTrace();
