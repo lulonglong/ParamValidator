@@ -1,6 +1,5 @@
 package org.lulonglong.util;
 
-
 /**
  * Descriptions
  * 
@@ -22,9 +21,9 @@ public class StringUtil {
 
 		return result;
 	}
-	
+
 	/**
-	 * �Ƿ�Ϊ�б��ַ���
+	 * 是否为列表字符串，例如121,343,asd
 	 * 
 	 * @param str
 	 * @param split
@@ -44,9 +43,8 @@ public class StringUtil {
 		return true;
 	}
 
-
 	/**
-	 * �Ƿ�Ϊ��
+	 * 是否为空字符串
 	 * 
 	 * @param str
 	 * @return
@@ -55,11 +53,16 @@ public class StringUtil {
 		return !isNotNull(str);
 	}
 
-
+	/**
+	 * 获取私有字段的标准set方法
+	 * 
+	 * @param methodName
+	 * @return
+	 */
 	public static String getSetMethodString(String methodName) {
 		if (isNullOrWhiteSpace(methodName))
 			return null;
-		return "set"+methodName.substring(0, 1).toUpperCase()
+		return "set" + methodName.substring(0, 1).toUpperCase()
 				+ methodName.substring(1);
 	}
 }
