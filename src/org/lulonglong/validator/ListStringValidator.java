@@ -1,7 +1,3 @@
-/**
- *  Copyright(C) 2012-2013 Suntec(Shanghai) Software Co., Ltd.
- *  All Right Reserved.
- */
 package org.lulonglong.validator;
 
 import org.lulonglong.base.validator.AbstractParamValidator;
@@ -19,9 +15,6 @@ public class ListStringValidator extends AbstractParamValidator {
 
 	private String split;
 
-	public ListStringValidator( String param, String errorCode ) {
-		super( param, errorCode );
-	}
 
 	/*
 	 * (non-Javadoc)

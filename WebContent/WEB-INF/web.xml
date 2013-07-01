@@ -19,21 +19,20 @@
 			/WEB-INF/conf/validateParam.xml
 		</param-value>
 	</context-param>
-
+	
+	<context-param>
+		<param-name>returnType</param-name>
+		<param-value>
+			xml
+		</param-value>
+	</context-param>
 	<listener>
 		<listener-class>org.lulonglong.listener.ValidateListener</listener-class>
 	</listener>
-<!--
-	<filter>
-		<display-name>ValidateFilter</display-name>
-		<filter-name>ValidateFilter</filter-name>
-		<filter-class>org.lulonglong.filter.ValidateFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>ValidateFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
--->
+	<!-- <filter> <display-name>ValidateFilter</display-name> <filter-name>ValidateFilter</filter-name> 
+		<filter-class>org.lulonglong.filter.ValidateFilter</filter-class> </filter> 
+		<filter-mapping> <filter-name>ValidateFilter</filter-name> <url-pattern>/*</url-pattern> 
+		</filter-mapping> -->
 
 
 	<servlet>
@@ -46,5 +45,5 @@
 		<servlet-name>testServlet</servlet-name>
 		<url-pattern>/testServlet</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>

@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -16,8 +18,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.ServletValidatorsMap;
 import org.lulonglong.util.StringUtil;
+import org.lulonglong.util.ValidateUtil;
 
 /**
  * Application Lifecycle Listener implementation class ValidateListener
@@ -38,12 +40,17 @@ public class ValidateListener implements ServletContextListener {
 	 */
 	@SuppressWarnings("unchecked")
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		
+
 		String configLocation = servletContextEvent.getServletContext()
 				.getInitParameter("validateConfigLocation");
 
+		String returnType = servletContextEvent.getServletContext()
+				.getInitParameter("returnType");
+		ValidateUtil.returnType = StringUtil.isNullOrWhiteSpace(returnType) ? ValidateUtil.returnType
+				: returnType;
+
 		if (StringUtil.isNullOrWhiteSpace(configLocation)) {
-			System.err.println("Ã»ÕÒµ½validateConfigLocationÅäÖÃÎÄ¼ş");
+			System.err.println("validateConfigLocationé…ç½®é¡¹ä¸å­˜åœ¨");
 			return;
 		}
 
@@ -51,32 +58,33 @@ public class ValidateListener implements ServletContextListener {
 				.getRealPath(configLocation);
 
 		SAXReader reader = new SAXReader();
-
+		Map<String,String> map = new HashMap<String,String>(); 
+        map.put("xmlns","http://www.example.net/test");
+		reader.getDocumentFactory().setXPathNamespaceURIs(map);
 		try {
 			Document document = reader.read(new File(configPath));
 			List<Element> servletValidators = document
-					.selectNodes("/validators/servletValidator");
+					.selectNodes("/xmlns:validators/xmlns:servletValidator");
 
-			// È¡µ½ËùÓĞµÄservlet
+			// è¯»å–æ¯ä¸ªservletValidator
 			for (Element servletValidator : servletValidators) {
 
 				String servletUrl = servletValidator.valueOf("@servletUrl");
 				List<AbstractParamValidator> paramValidators = new ArrayList<AbstractParamValidator>();
 
 				List<Element> validators = servletValidator
-						.selectNodes("validator");
+						.selectNodes("xmlns:validator");
 
-				// È¡µ½Ã¿¸öservlet¶ÔÓ¦µÄËùÓĞvalidator
+				// è¯»å–æ¯ä¸ªvalidator
 				for (Element validator : validators) {
 
-					paramValidators.clear();
 					String validatorClassName = validator
 							.valueOf("@validatorClass");
 
 					Class<?> validatorClass = Class.forName(validatorClassName);
 					Object validatorInstance = validatorClass.newInstance();
 
-					// µ÷ÓÃÃ¿¸övalidatorÉÏËù¶ÔÓ¦µÄÉèÖÃ·½·¨
+					// è¯»å–validatorçš„æ‰€æœ‰å‚æ•°
 					List<Attribute> attributes = validator.attributes();
 					for (Attribute attribute : attributes) {
 
@@ -94,14 +102,14 @@ public class ValidateListener implements ServletContextListener {
 
 					}
 
-					// ÉèÖÃvalidatorĞèÒªÑéÖ¤µÄËùÓĞ²ÎÊı
+					// è¯»å–validatoréœ€è¦éªŒè¯çš„å‚æ•°
 					List<Element> params = validator
-							.selectNodes("validateParam");
+							.selectNodes("xmlns:validateParam");
 					for (Element element : params) {
 
 						String nameString = element.valueOf("@name");
-						String errorCode = element.valueOf("errorCode");
-						
+						String errorCode = element.valueOf("@errorCode");
+
 						Method addParamMethod = validatorClass.getMethod(
 								"addParam", String.class, String.class);
 
@@ -112,12 +120,15 @@ public class ValidateListener implements ServletContextListener {
 							.add((AbstractParamValidator) validatorInstance);
 
 				}
-				ServletValidatorsMap.servletValidators.put(servletUrl,
-						paramValidators);
+				ValidateUtil.servletValidators.put(servletUrl, paramValidators);
 
 			}
-			System.out.println(ServletValidatorsMap.servletValidators.size());
-			servletContextEvent.getServletContext().addFilter("ValidateFilter", "org.lulonglong.filter.ValidateFilter");
+
+			FilterRegistration filterRegistration = servletContextEvent
+					.getServletContext().addFilter("ValidateFilter",
+							"org.lulonglong.filter.ValidateFilter");
+			filterRegistration.addMappingForUrlPatterns(null, true, "/*");
+
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -131,20 +142,17 @@ public class ValidateListener implements ServletContextListener {
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
 	 */
 	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 }

@@ -20,12 +20,7 @@ public class MaxLengthValidator extends AbstractParamValidator {
 	private int maxLength;
 	private String charsetName = "utf-8";
 
-	public MaxLengthValidator() {
-	}
 
-	public MaxLengthValidator(String paramName, String errorCode) {
-		super(paramName, errorCode);
-	}
 
 	@Override
 	protected boolean isError(String content) throws Exception {

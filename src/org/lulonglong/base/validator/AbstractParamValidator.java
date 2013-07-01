@@ -1,7 +1,4 @@
-/**
- *  Copyright(C) 2012-2013 Suntec(Shanghai) Software Co., Ltd.
- *  All Right Reserved.
- */
+
 package org.lulonglong.base.validator;
 
 import java.util.ArrayList;
@@ -12,7 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 鍗曢」鍔熻兘楠岃瘉鐨勬娊璞＄被
+ * 各个验证器的抽象基类
  * 
  * @version 2013-6-14
  * @author lulonglong
@@ -20,17 +17,11 @@ import javax.servlet.http.HttpServletRequest;
  * 
  */
 public abstract class AbstractParamValidator {
-	public AbstractParamValidator() {
-	}
 
 	protected Map<String, String> paramsMap = new HashMap<String, String>();
 
-	public AbstractParamValidator(String paramName, String errorCode) {
-		paramsMap.put(paramName, errorCode);
-	}
-
 	/**
-	 * 鍚戦獙璇佸櫒娣诲姞鍙傛暟
+	 * 添加验证参数
 	 * 
 	 * @param paramName
 	 * @param errorCode
@@ -40,10 +31,10 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * 楠岃瘉鎵?湁鍔犲叆鍒版楠岃瘉鍣ㄧ殑鍙傛暟
+	 * 验证
 	 * 
 	 * @param req
-	 * @return
+	 * @return 返回错误码列表，无错误码则返回空列表
 	 * @throws Exception
 	 */
 	public List<String> validate(HttpServletRequest req) throws Exception {
@@ -59,7 +50,7 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * 楠岃瘉閿欒鐨勬潯浠? *
+	 * 验证错误条件
 	 * 
 	 * @param content
 	 * @return
