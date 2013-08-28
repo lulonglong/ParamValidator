@@ -1,4 +1,4 @@
-package org.lulonglong.servlet;
+package org.paramvalidate.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

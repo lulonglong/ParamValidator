@@ -1,5 +1,5 @@
 
-package org.lulonglong.base.validator;
+package org.paramvalidate.base.validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * ¸÷¸öÑéÖ¤Æ÷µÄ³éÏó»ùÀà
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @version 2013-6-14
  * @author lulonglong
@@ -21,7 +21,7 @@ public abstract class AbstractParamValidator {
 	protected Map<String, String> paramsMap = new HashMap<String, String>();
 
 	/**
-	 * Ìí¼ÓÑéÖ¤²ÎÊı
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param paramName
 	 * @param errorCode
@@ -31,10 +31,10 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * ÑéÖ¤
+	 * ï¿½ï¿½Ö¤
 	 * 
 	 * @param req
-	 * @return ·µ»Ø´íÎóÂëÁĞ±í£¬ÎŞ´íÎóÂëÔò·µ»Ø¿ÕÁĞ±í
+	 * @return ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±?ï¿½Ş´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»Ø¿ï¿½ï¿½Ğ±ï¿½
 	 * @throws Exception
 	 */
 	public List<String> validate(HttpServletRequest req) throws Exception {
@@ -50,7 +50,7 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * ÑéÖ¤´íÎóÌõ¼ş
+	 * ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param content
 	 * @return

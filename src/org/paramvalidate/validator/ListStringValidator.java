@@ -1,7 +1,7 @@
-package org.lulonglong.validator;
+package org.paramvalidate.validator;
 
-import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.StringUtil;
+import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.StringUtil;
 
 /**
  * 验证是否为被指定符号分隔的列表字符串
@@ -26,7 +26,7 @@ public class ListStringValidator extends AbstractParamValidator {
 	}
 
 	/**
-	 * 设置分隔�?	 * 
+	 * 设置分隔�?	 * 
 	 * @param split
 	 */
 	public void setSplit( String split ) {

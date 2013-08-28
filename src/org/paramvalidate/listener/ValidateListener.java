@@ -1,4 +1,4 @@
-package org.lulonglong.listener;
+package org.paramvalidate.listener;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -16,9 +16,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.StringUtil;
-import org.lulonglong.util.ValidateUtil;
+import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.StringUtil;
+import org.paramvalidate.util.ValidateUtil;
 
 /**
  * Application Lifecycle Listener implementation class ValidateListener
@@ -125,7 +125,7 @@ public class ValidateListener implements ServletContextListener {
 			// 在jetty里报错
 			// FilterRegistration filterRegistration = servletContextEvent
 			// .getServletContext().addFilter("ValidateFilter",
-			// "org.lulonglong.filter.ValidateFilter");
+			// "org.paramvalidate.filter.ValidateFilter");
 			// filterRegistration.addMappingForUrlPatterns(null, true, "/*");
 
 		} catch (DocumentException e) {

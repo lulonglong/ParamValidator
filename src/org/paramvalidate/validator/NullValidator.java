@@ -1,7 +1,7 @@
-package org.lulonglong.validator;
+package org.paramvalidate.validator;
 
-import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.StringUtil;
+import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.StringUtil;
 
 /**
  * 验证是否为null或空

@@ -1,4 +1,4 @@
-package org.lulonglong.vo;
+package org.paramvalidate.vo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class ErrorResultVO {
 	private List<String> errorCodeList = null;
 
 	/**
-	 * ÉèÖÃ´íÎóÁĞ±í
+	 * ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½
 	 * 
 	 * @param errorCodes
 	 */
@@ -45,7 +45,7 @@ public class ErrorResultVO {
 	}
 	
 	/**
-	 * ·µ»Ø´íÎóÂëÁĞ±íµÄJson´®
+	 * ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½Jsonï¿½ï¿½
 	 * 
 	 * @return
 	 */

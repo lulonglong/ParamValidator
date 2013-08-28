@@ -1,4 +1,4 @@
-package org.lulonglong.filter;
+package org.paramvalidate.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.ValidateUtil;
-import org.lulonglong.vo.ErrorResultVO;
+import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.ValidateUtil;
+import org.paramvalidate.vo.ErrorResultVO;
 
 /**
  * Servlet Filter implementation class ValidateFilter

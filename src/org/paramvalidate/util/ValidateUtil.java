@@ -1,6 +1,6 @@
-package org.lulonglong.util;
+package org.paramvalidate.util;
 
-import org.lulonglong.base.validator.*;
+import org.paramvalidate.base.validator.*;
 
 import java.util.*;
 

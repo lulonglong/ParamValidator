@@ -1,4 +1,4 @@
-package org.lulonglong.util;
+package org.paramvalidate.util;
 
 /**
  * Descriptions

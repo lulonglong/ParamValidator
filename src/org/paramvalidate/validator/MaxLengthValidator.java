@@ -2,13 +2,13 @@
  *  Copyright(C) 2012-2013 Suntec(Shanghai) Software Co., Ltd.
  *  All Right Reserved.
  */
-package org.lulonglong.validator;
+package org.paramvalidate.validator;
 
-import org.lulonglong.base.validator.AbstractParamValidator;
-import org.lulonglong.util.StringUtil;
+import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.StringUtil;
 
 /**
- * 验证在制定编码下是否超出�?��长度
+ * 验证在制定编码下是否超出�?��长度
  * 
  * @version 2013-6-14
  * @author lulonglong
@@ -38,7 +38,7 @@ public class MaxLengthValidator extends AbstractParamValidator {
 	}
 
 	/**
-	 * 设置�?��长度
+	 * 设置�?��长度
 	 * 
 	 * @param maxLength
 	 */
