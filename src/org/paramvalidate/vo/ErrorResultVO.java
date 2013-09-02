@@ -10,11 +10,11 @@ import java.util.List;
  * @since JDK1.6
  * 
  */
-public class ErrorResultVO {
-	private List<String> errorCodeList = null;
+public class ErrorResultVO extends AbstractErrorResultVO {
 
+	@Override
 	/**
-	 * ���ô����б�
+	 * set errorCodes
 	 * 
 	 * @param errorCodes
 	 */
@@ -25,6 +25,10 @@ public class ErrorResultVO {
 		errorCodeList = errorCodes;
 	}
 
+	@Override
+	/**
+	 * get xml error result
+	 */
 	public String toXmlString() {
 
 		StringBuilder midString = new StringBuilder();
@@ -44,8 +48,9 @@ public class ErrorResultVO {
 		return "</result>";
 	}
 	
+	@Override
 	/**
-	 * ���ش������б��Json��
+	 * get json result
 	 * 
 	 * @return
 	 */

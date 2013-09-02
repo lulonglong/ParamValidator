@@ -40,9 +40,12 @@
 
     <xsd:complexType name="validators">
     	<xsd:sequence>
+    		<xsd:element ref="errorResultClass" maxOccurs="1" minOccurs="0"></xsd:element>
     		<xsd:element ref="servletValidator" maxOccurs="unbounded" minOccurs="1"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 
     
+
+    <xsd:element name="errorResultClass" type="xsd:string"></xsd:element>
 </xsd:schema>

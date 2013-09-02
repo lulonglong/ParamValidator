@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.paramvalidate.base.validator.AbstractParamValidator;
 import org.paramvalidate.util.ValidateUtil;
-import org.paramvalidate.vo.ErrorResultVO;
+import org.paramvalidate.vo.AbstractErrorResultVO;
 
 /**
  * Servlet Filter implementation class ValidateFilter
@@ -40,14 +40,17 @@ public class ValidateFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		// get request
 		HttpServletRequest req = (HttpServletRequest) request;
-		
+
+		// get servlet validators
 		String servletUrlString = req.getServletPath();
 		List<AbstractParamValidator> validators = ValidateUtil.servletValidators
 				.get(servletUrlString);
+
 		if (validators != null) {
 			List<String> errorCodes = new ArrayList<String>();
-
+			// validate every
 			for (AbstractParamValidator validator : validators) {
 				try {
 					errorCodes.addAll(validator.validate(req));
@@ -57,8 +60,20 @@ public class ValidateFilter implements Filter {
 			}
 
 			if (!errorCodes.isEmpty()) {
-				ErrorResultVO vo = new ErrorResultVO();
-				vo.setErrorCodes(errorCodes);
+				AbstractErrorResultVO vo = null;
+				try {
+					vo = (AbstractErrorResultVO) Class.forName(
+							ValidateUtil.errorResultClass).newInstance();
+					vo.setErrorCodes(errorCodes);
+
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
 				if (ValidateUtil.returnType == "json") {
 					response.getWriter().println(vo.toJsonString());
 				} else {

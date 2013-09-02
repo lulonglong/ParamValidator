@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * ������֤���ĳ������
+ * AbstractParamValidator
  * 
  * @version 2013-6-14
  * @author lulonglong
@@ -21,7 +21,7 @@ public abstract class AbstractParamValidator {
 	protected Map<String, String> paramsMap = new HashMap<String, String>();
 
 	/**
-	 * �����֤����
+	 * add param and errorCode
 	 * 
 	 * @param paramName
 	 * @param errorCode
@@ -31,10 +31,10 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * ��֤
+	 * use this validator validate request params
 	 * 
 	 * @param req
-	 * @return ���ش������б?�޴������򷵻ؿ��б�
+	 * @return errorCodes
 	 * @throws Exception
 	 */
 	public List<String> validate(HttpServletRequest req) throws Exception {
@@ -50,7 +50,7 @@ public abstract class AbstractParamValidator {
 	}
 
 	/**
-	 * ��֤��������
+	 * is this param error
 	 * 
 	 * @param content
 	 * @return

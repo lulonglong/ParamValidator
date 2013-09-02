@@ -15,6 +15,7 @@ import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.paramvalidate.base.validator.AbstractParamValidator;
 import org.paramvalidate.util.StringUtil;
@@ -40,32 +41,42 @@ public class ValidateListener implements ServletContextListener {
 	@SuppressWarnings("unchecked")
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-		String configLocation = servletContextEvent.getServletContext()
-				.getInitParameter("validateConfigLocation");
-
+		// return format json or xml, default is xml
 		String returnType = servletContextEvent.getServletContext()
 				.getInitParameter("returnType");
 		ValidateUtil.returnType = StringUtil.isNullOrWhiteSpace(returnType) ? ValidateUtil.returnType
 				: returnType;
 
+		// get validateParam.xml path
+		String configLocation = servletContextEvent.getServletContext()
+				.getInitParameter("validateConfigLocation");
 		if (StringUtil.isNullOrWhiteSpace(configLocation)) {
-			System.err.println("validateConfigLocation配置项不存在");
+			System.err.println("validateConfigLocation config is not found");
 			return;
 		}
 
-		String configPath = servletContextEvent.getServletContext()
-				.getRealPath(configLocation);
-
+		// add namespace
 		SAXReader reader = new SAXReader();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("xmlns", "http://www.example.net/test");
 		reader.getDocumentFactory().setXPathNamespaceURIs(map);
+
 		try {
+			String configPath = servletContextEvent.getServletContext()
+					.getRealPath(configLocation);
 			Document document = reader.read(new File(configPath));
+
+			// get errorResultClass
+			Node node = document
+					.selectSingleNode("/xmlns:validators/xmlns:errorResultClass");
+			ValidateUtil.errorResultClass = node == null ? "org.paramvalidate.vo.ErrorResultVO"
+					: node.getText();
+
+			// get all servlets
 			List<Element> servletValidators = document
 					.selectNodes("/xmlns:validators/xmlns:servletValidator");
 
-			// 读取每个servletValidator
+			// read all servletValidators
 			for (Element servletValidator : servletValidators) {
 
 				String servletUrl = servletValidator.valueOf("@servletUrl");
@@ -74,16 +85,15 @@ public class ValidateListener implements ServletContextListener {
 				List<Element> validators = servletValidator
 						.selectNodes("xmlns:validator");
 
-				// 读取每个validator
+				// read all validator in servletValidator
 				for (Element validator : validators) {
 
 					String validatorClassName = validator
 							.valueOf("@validatorClass");
-
 					Class<?> validatorClass = Class.forName(validatorClassName);
 					Object validatorInstance = validatorClass.newInstance();
 
-					// 读取validator的所有参数
+					// read attributes in this validator
 					List<Attribute> attributes = validator.attributes();
 					for (Attribute attribute : attributes) {
 
@@ -101,7 +111,7 @@ public class ValidateListener implements ServletContextListener {
 
 					}
 
-					// 读取validator需要验证的参数
+					// read params in this validator
 					List<Element> params = validator
 							.selectNodes("xmlns:validateParam");
 					for (Element element : params) {
@@ -115,14 +125,18 @@ public class ValidateListener implements ServletContextListener {
 						addParamMethod.invoke(validatorInstance, nameString,
 								errorCode);
 					}
+
+					// all paramValidators in the servlet
 					paramValidators
 							.add((AbstractParamValidator) validatorInstance);
 
 				}
+
+				// all servlet validators
 				ValidateUtil.servletValidators.put(servletUrl, paramValidators);
 
 			}
-			// 在jetty里报错
+			// error in jetty
 			// FilterRegistration filterRegistration = servletContextEvent
 			// .getServletContext().addFilter("ValidateFilter",
 			// "org.paramvalidate.filter.ValidateFilter");

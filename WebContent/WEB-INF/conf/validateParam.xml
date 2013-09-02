@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validators xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.example.net/test" xsi:schemaLocation="http://www.example.net/test validateParam.xsd">
-<servletValidator servletUrl="/testServlet">
 
-<validator validatorClass="org.paramvalidate.validator.NullValidator" >
-<validateParam name="id" errorCode="010101"/>
-<validateParam name="content" errorCode="010112"/>
-<validateParam name="name" errorCode="010113"/>
-</validator>
+	<!--  <errorResultClass></errorResultClass>-->
+	<servletValidator servletUrl="/testServlet">
 
-<validator validatorClass="org.paramvalidate.validator.MaxLengthValidator" maxLength="2" charsetName="utf-8">
-<validateParam name="content" errorCode="010102"/>
-<validateParam name="name" errorCode="010103"/>
-</validator>
+		<validator validatorClass="org.paramvalidate.validator.NullValidator">
+			<validateParam name="id" errorCode="010101" />
+			<validateParam name="content" errorCode="010112" />
+			<validateParam name="name" errorCode="010113" />
+		</validator>
+		
+	</servletValidator>
 
-</servletValidator>
+	<servletValidator servletUrl="sendToGroup">
 
-<servletValidator servletUrl="sendToGroup">
-
-<validator validatorClass="org.paramvalidate.validator.NullValidator" >
-<validateParam name="content" errorCode="010101"/>
-</validator>
-
-<validator validatorClass="org.paramvalidate.validator.MaxLengthValidator" maxLength="100" charsetName="utf-8">
-<validateParam name="content" errorCode="020101"/>
-<validateParam name="userlist" errorCode="020102"/>
-</validator>
-
-</servletValidator>
+		<validator validatorClass="org.paramvalidate.validator.NullValidator">
+			<validateParam name="content" errorCode="010101" />
+		</validator>
+	</servletValidator>
 </validators>
