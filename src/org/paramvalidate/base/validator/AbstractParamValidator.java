@@ -1,12 +1,15 @@
 
 package org.paramvalidate.base.validator;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 
 /**
  * AbstractParamValidator
@@ -17,7 +20,12 @@ import javax.servlet.http.HttpServletRequest;
  * 
  */
 public abstract class AbstractParamValidator {
-
+	private Logger logger;
+	
+	protected AbstractParamValidator(){
+		logger=Logger.getLogger(this.getClass());
+	}
+	
 	protected Map<String, String> paramsMap = new HashMap<String, String>();
 
 	/**
@@ -42,6 +50,7 @@ public abstract class AbstractParamValidator {
 
 		for (String paramName : paramsMap.keySet()) {
 			if (isError(req.getParameter(paramName))) {
+				logger.info(MessageFormat.format("Param is illegal-- key:{0} value:{1} errorCode:{2} validator:{3}",paramName,req.getParameter(paramName),paramsMap.get(paramName),this.getClass()));
 				errorCodes.add(paramsMap.get(paramName));
 			}
 		}
