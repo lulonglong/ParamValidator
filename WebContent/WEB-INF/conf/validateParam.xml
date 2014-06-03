@@ -12,11 +12,4 @@
 		</validator>
 		
 	</servletValidator>
-
-	<servletValidator servletUrl="sendToGroup">
-
-		<validator validatorClass="org.paramvalidate.validator.NullValidator">
-			<validateParam name="content" errorCode="010101" />
-		</validator>
-	</servletValidator>
 </validators>
