@@ -12,7 +12,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.paramvalidate.base.validator.AbstractParamValidator;
+import org.paramvalidate.util.StringUtil;
 import org.paramvalidate.util.ValidateUtil;
 import org.paramvalidate.vo.AbstractErrorResultVO;
 
@@ -21,18 +23,17 @@ import org.paramvalidate.vo.AbstractErrorResultVO;
  */
 public class ValidateFilter implements Filter {
 
+	private Logger logger=Logger.getLogger(this.getClass());
 	/**
 	 * Default constructor.
 	 */
 	public ValidateFilter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -40,6 +41,8 @@ public class ValidateFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		logger.info( "ValidateFilter Start....." );
+		
 		// get request
 		HttpServletRequest req = (HttpServletRequest) request;
 
@@ -55,7 +58,7 @@ public class ValidateFilter implements Filter {
 				try {
 					errorCodes.addAll(validator.validate(req));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error( StringUtil.getExceptionStack( e ) );
 				}
 			}
 
@@ -67,22 +70,25 @@ public class ValidateFilter implements Filter {
 					vo.setErrorCodes(errorCodes);
 
 				} catch (InstantiationException e) {
-					e.printStackTrace();
+					logger.error( StringUtil.getExceptionStack( e ) );
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					logger.error( StringUtil.getExceptionStack( e ) );
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+					logger.error( StringUtil.getExceptionStack( e ) );
 				}
 				
 				if (ValidateUtil.returnType == "json") {
+					logger.info( vo.toJsonString() );
 					response.getWriter().println(vo.toJsonString());
 				} else {
+					logger.info( vo.toXmlString() );
 					response.getWriter().println(vo.toXmlString());
 				}
 				return;
 			}
 		}
 		chain.doFilter(request, response);
+		logger.info( "ValidateFilter End....." );
 	}
 
 	/**
