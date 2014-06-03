@@ -65,4 +65,24 @@ public class StringUtil {
 		return "set" + methodName.substring(0, 1).toUpperCase()
 				+ methodName.substring(1);
 	}
+	
+	/**
+	 * 获取堆栈信息
+	 * 
+	 * @param e
+	 * @return
+	 */
+	public static String getExceptionStack( Exception e ) {
+		StackTraceElement[] stackTraceElements = e.getStackTrace();
+		StringBuilder result = new StringBuilder( e.toString().replace( '\r', ' ' ).replace( '\n', ' ' ) + "@@@" );
+
+		for ( int index = 0; index < stackTraceElements.length; index++ ) {
+			result.append( "at " ).append( stackTraceElements[index].getClassName() ).append( "." );
+			result.append( stackTraceElements[index].getMethodName() + "(" );
+			result.append( stackTraceElements[index].getFileName() + ":" );
+			result.append( stackTraceElements[index].getLineNumber() + ")@@@" );
+		}
+
+		return result.toString();
+	}
 }
