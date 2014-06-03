@@ -31,8 +31,6 @@ public class ValidateListener implements ServletContextListener {
 	 * Default constructor.
 	 */
 	public ValidateListener() {
-		// TODO Auto-generated constructor stub
-
 	}
 
 	/**
